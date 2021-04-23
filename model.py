@@ -14,13 +14,15 @@ class Player(nn.Module):
         super(Player, self).__init__()
         self.fc1 = nn.Linear(6*7, hidden_size)
         self.fc2 = nn.Linear(hidden_size, hidden_size)
-        self.fc3 = nn.Linear(hidden_size, 7)
+        self.fc3 = nn.Linear(hidden_size, hidden_size)
+        self.fc4 = nn.Linear(hidden_size, 7)
     
     def forward(self, x):
         x = torch.Tensor(x.reshape(1, -1))
-        x = F.relu(self.fc1(x))
-        x = F.relu(self.fc2(x))
-        x = F.relu(self.fc3(x))
+        x = F.leaky_relu(self.fc1(x))
+        x = F.leaky_relu(self.fc2(x))
+        x = F.leaky_relu(self.fc3(x))
+        x = F.leaky_relu(self.fc4(x))
         return x
 
 def game(player0, player1):
